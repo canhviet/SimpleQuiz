@@ -1,0 +1,53 @@
+<div class="container">
+    <h2>Tạo Bài Trắc Nghiệm</h2>
+
+    <div class="form-group">
+        <label for="quizzTitle">Tiêu đề :</label>
+        <input
+            type="text"
+            id="quizzTitle"
+            [(ngModel)]="quizz.title"
+            name="quizz_title"
+            class="form-control"
+            placeholder="Nhập tiêu đề..."
+        />
+    </div>
+
+    <div *ngFor="let q of quizz.questions; let i = index" class="question-box">
+        <h4>Câu hỏi {{ i + 1 }}</h4>
+
+        <div class="form-group">
+            <input
+                type="text"
+                [(ngModel)]="q.title"
+                name="question_{{ i }}"
+                class="form-control"
+                placeholder="Nhập nội dung câu hỏi..."
+            />
+        </div>
+
+        <div *ngFor="let o of q.options; let j = index" class="option-box">
+            <input
+                type="text"
+                [(ngModel)]="o.title"
+                name="option_{{ i }}_{{ j }}"
+                class="form-control option-input"
+                placeholder="Nhập đáp án..."
+            />
+            <input
+                type="radio"
+                [checked]="o.is_correct"
+                name="question_{{ i }}"
+                (change)="setCorrectAnswer(q, j)"
+                class="form-check-input"
+            />
+        </div>
+    </div>
+
+    <div class="button-group">
+        <button class="btn btn-primary" (click)="addQuestion()">
+            Thêm câu hỏi
+        </button>
+        <button class="btn btn-success" (click)="submit()">Gửi bài quiz</button>
+    </div>
+</div>
