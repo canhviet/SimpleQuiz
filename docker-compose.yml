@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: root         
+      POSTGRES_PASSWORD: password  
+      POSTGRES_DB: dacn   
+    ports:
+      - "5432:5432"                 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  
+    restart: unless-stopped
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"  # API port
+      - "9001:9001"  # Console port
+    environment:
+      - MINIO_ROOT_USER=dacn123
+      - MINIO_ROOT_PASSWORD=nguyencanhviet
+    volumes:
+      - minio-data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+volumes:
+  postgres_data:     
+  minio-data:              

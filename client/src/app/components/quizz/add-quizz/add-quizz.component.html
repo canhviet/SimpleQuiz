@@ -1,39 +1,21 @@
 <div class="container">
-    <h2>Tạo Bài Trắc Nghiệm</h2>
+    <h2>Create Quizz</h2>
 
-    <div class="form-group">
-        <label for="quizzTitle">Tiêu đề :</label>
-        <input
-            type="text"
-            id="quizzTitle"
-            [(ngModel)]="quizz.title"
-            name="quizz_title"
-            class="form-control"
-            placeholder="Nhập tiêu đề..."
-        />
-    </div>
+    <div class="form-group"><input type="text" [(ngModel)]="quizz.title" name="quizz_title" class="form-control" placeholder="Enter quizz name"/></div>
 
     <div *ngFor="let q of quizz.questions; let i = index" class="question-box">
-        <h4>Câu hỏi {{ i + 1 }}</h4>
+        <h4>question {{ i + 1 }}</h4>
 
-        <div class="form-group">
-            <input
-                type="text"
+        <div class="form-group mb-3">
+            <quill-editor
+                class="content-editor"
+                [placeholder]="''"
+                [modules]="QuillConfiguration"
                 [(ngModel)]="q.title"
                 name="question_{{ i }}"
-                class="form-control mb-2"
-                placeholder="Nhập nội dung câu hỏi..."
-            />
+            ></quill-editor>
         </div>
-
         <div *ngFor="let o of q.options; let j = index" class="option-box">
-            <input
-                type="text"
-                [(ngModel)]="o.title"
-                name="option_{{ i }}_{{ j }}"
-                class="form-control option-input"
-                placeholder="Nhập đáp án..."
-            />
             <input
                 type="radio"
                 [checked]="o.is_correct"
@@ -41,13 +23,20 @@
                 (change)="setCorrectAnswer(q, j)"
                 class="form-check-input"
             />
+            <quill-editor
+                class="content-editor"
+                [placeholder]="''"
+                [modules]="QuillConfiguration"
+                [(ngModel)]="o.title"
+                name="option_{{ i }}_{{ j }}"
+            ></quill-editor>
         </div>
     </div>
 
     <div class="button-group">
         <button class="btn btn-primary" (click)="addQuestion()">
-            Thêm câu hỏi
+            add question
         </button>
-        <button class="btn btn-success" (click)="submit()">Gửi bài quiz</button>
+        <button class="btn btn-success" (click)="submit()">submit</button>
     </div>
 </div>

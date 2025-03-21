@@ -1,0 +1,30 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dacn
+    username: root
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+minio:
+  endpoint: "http://localhost:9000"
+  accessKey: "dacn123"
+  secretKey: "nguyencanhviet"
+  bucketName: "uploads"
+
+jwt:
+  expiryHour: 1
+  expiryDay: 14
+  accessKey: c2VjcmV0QGtleS5hcGlfaGFzX2JlZW5fZGVzaWduZWRfYnlfVGF5TFE=
+  refreshKey: 9k1jJAWAKQCnCEz1pwcPNegbHoLugf9hgEnn6sz5pFc=
+  resetKey: 2OeEeG48CvIcH1K0UAXbSo/7gPj3QLJ7MnQZuscRirQ=
+

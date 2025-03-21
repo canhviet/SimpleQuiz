@@ -1,0 +1,47 @@
+package viet.DACN.controller;
+
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
+import viet.DACN.dto.request.QuizzRequest;
+import viet.DACN.dto.response.QuizzResponse;
+import viet.DACN.dto.response.ResponseData;
+import viet.DACN.service.QuizzService;
+
+@RestController
+@RequestMapping("/quizz")
+@RequiredArgsConstructor
+public class QuizzController {
+    private final QuizzService quizzService;
+
+    @PostMapping("/")
+    public ResponseData<?> createQuizz(@RequestBody QuizzRequest request) {
+        Long quizzId = quizzService.saveQuizz(request);
+        return new ResponseData<>(HttpStatus.CREATED.value(), "quizz add success", quizzId);
+    }
+
+    @GetMapping("/all")
+    public ResponseData<?> getAllQuizzs() {
+        try {
+            List<QuizzResponse> list = quizzService.getAllQuizz();
+
+            return new ResponseData<>(HttpStatus.OK.value(), "list all quizz", list);
+        } catch (Exception e) {
+            return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        }
+    }
+
+    @GetMapping("/{quizzId}")
+    public ResponseData<?> getQuizzById(@PathVariable Long quizzId) {
+        QuizzResponse quizz = quizzService.getQuizzResponseByQuizzId(quizzId);
+        return new ResponseData<>(HttpStatus.OK.value(), "get quizz with id: " + quizzId, quizz);
+    }
+}
