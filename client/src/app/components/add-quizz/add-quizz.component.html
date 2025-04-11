@@ -1,0 +1,84 @@
+<div class="container">
+    <h2>Create Quiz</h2>
+
+    <div class="form-group">
+        <input
+            type="text"
+            [(ngModel)]="quizz.name"
+            name="quizz_title"
+            class="form-control"
+            placeholder="Enter quizz name"
+            #quizz_title="ngModel"
+            required
+        />
+        <div
+            *ngIf="quizz_title.touched && quizz_title.invalid"
+            class="text-danger"
+        >
+            <div *ngIf="quizz_title.errors?.['required']">
+                Quiz's title cannot be empty!
+            </div>
+        </div>
+    </div>
+
+    <div *ngFor="let q of quizz.questions; let i = index" class="question-box">
+        <div class="question-header">
+            <h5>Question {{ i + 1 }}</h5>
+            <button
+                class="btn btn-danger delete-btn"
+                (click)="confirmDelete(i)"
+            >
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+        <div class="form-group mb-3">
+            <quill-editor
+                class="content-editor-question"
+                [placeholder]="'Enter question'"
+                [modules]="QuillConfiguration"
+                [(ngModel)]="q.title"
+                name="question_{{ i }}"
+                #questionInput="ngModel"
+            ></quill-editor>
+            <div
+                *ngIf="questionInput.touched && !hasContent(q.title)"
+                class="text-danger"
+                style="padding-left: 30px"
+            >
+                Question cannot be empty!
+            </div>
+        </div>
+        <div *ngFor="let o of q.options; let j = index" class="option-box">
+            <input
+                type="radio"
+                [checked]="o.isCorrect"
+                name="question_{{ i }}"
+                (change)="setCorrectAnswer(q, j)"
+                class="form-check-input"
+            />
+            <quill-editor
+                class="content-editor"
+                [placeholder]="'Enter option'"
+                [modules]="QuillConfiguration"
+                [(ngModel)]="o.title"
+                name="option_{{ i }}_{{ j }}"
+                #optionInput="ngModel"
+            ></quill-editor>
+            <div
+                *ngIf="optionInput.touched && !hasContent(o.title)"
+                class="text-danger"
+            >
+                Option cannot be empty!
+            </div>
+        </div>
+    </div>
+
+    <div class="button-group">
+        <button class="btn btn-outline-primary" (click)="addQuestion()">
+            <i class="fas fa-plus"></i>
+        </button>
+        <button class="btn btn-outline-primary" (click)="submit()">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+</div>

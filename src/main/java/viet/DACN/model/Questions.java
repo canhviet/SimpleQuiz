@@ -25,7 +25,7 @@ import lombok.Setter;
 @Builder
 public class Questions extends AbstractEntity<Long>{
     
-    @Column(name = "title")
+    @Column(name = "title", columnDefinition = "TEXT")
     private String title;
 
     @ManyToOne

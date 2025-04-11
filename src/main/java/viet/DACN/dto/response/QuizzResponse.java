@@ -1,5 +1,6 @@
 package viet.DACN.dto.response;
 
+import java.util.Date;
 import java.util.List;
 
 import lombok.Builder;
@@ -14,4 +15,5 @@ public class QuizzResponse {
     String name;
     Long userId;
     List<QuestionResponse> questions;
+    private Date updatedAt;
 }

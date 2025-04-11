@@ -15,12 +15,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-minio:
-  endpoint: "http://localhost:9000"
-  accessKey: "dacn123"
-  secretKey: "nguyencanhviet"
-  bucketName: "uploads"
-
 jwt:
   expiryHour: 1
   expiryDay: 14

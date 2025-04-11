@@ -3,9 +3,11 @@ package viet.DACN.dto.request;
 import java.io.Serializable;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public class UserRequest implements Serializable{
     @NotNull(message = "username must be not null")
     String username;

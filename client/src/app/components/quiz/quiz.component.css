@@ -1,0 +1,32 @@
+.container {
+    margin: auto;
+    padding: 20px;
+    background: #f4faff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.score {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #28a745;
+}
+
+.option-box {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.btn {
+    width: 70px;
+}

@@ -15,6 +15,7 @@ import viet.DACN.dto.request.QuizzRequest;
 import viet.DACN.dto.response.OptionResponse;
 import viet.DACN.dto.response.QuestionResponse;
 import viet.DACN.dto.response.QuizzResponse;
+import viet.DACN.exception.InvalidDataException;
 import viet.DACN.model.Options;
 import viet.DACN.model.Questions;
 import viet.DACN.model.Quizz;
@@ -54,7 +55,7 @@ public class QuizzServiceImpl implements QuizzService {
     @Override
     public QuizzResponse getQuizzResponseByQuizzId(Long quizzId) {
         Quizz quizz = quizzRepository.findByIdWithQuestionsAndOptions(quizzId)
-            .orElseThrow(() -> new RuntimeException("Quizz not found with id: " + quizzId));
+            .orElseThrow(() -> new InvalidDataException("Quizz not found with id: " + quizzId));
         return QuizzResponse.builder()
                 .id(quizz.getId())
                 .name(quizz.getName())
@@ -71,6 +72,7 @@ public class QuizzServiceImpl implements QuizzService {
                 .name(q.getName())
                 .userId(q.getUser().getId())
                 .questions(convertToQuestionResponses(q.getQuestions()))
+                .updatedAt(q.getUpdatedAt())
                 .build()
             )
             .collect(Collectors.toList());
@@ -131,6 +133,47 @@ public class QuizzServiceImpl implements QuizzService {
 
     private User getUserById(Long userId) {
         return userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+            .orElseThrow(() -> new InvalidDataException("User not found with id: " + userId));
+    }
+
+    @Override
+    public List<QuizzResponse> getAllQuizzByUserId(Long userId) {
+        List<Quizz> quizzs = quizzRepository.findAllWithUserId(userId);
+        return convertToQuizzResponses(quizzs);
+    }
+
+    @Override
+    @Transactional
+    public Long updateQuizz(Long quizzId, QuizzRequest request) {
+        System.out.println("Request data: " + request);
+        Quizz quizz = quizzRepository.findByIdWithQuestionsAndOptions(quizzId)
+            .orElseThrow(() -> new InvalidDataException("Quizz not found with id: " + quizzId));
+
+        System.out.println("Before update: " + quizz);
+
+        quizz.setName(request.getName());
+        quizz.setUser(getUserById(request.getUserId()));
+
+        quizz.getQuestions().clear();
+
+        Set<Questions> newQuestions = convertToQuestions(request.getQuestions(), quizz);
+        quizz.getQuestions().addAll(newQuestions);
+
+        quizzRepository.saveAndFlush(quizz);
+        return quizz.getId();
+    }
+
+    @Override
+    @Transactional
+    public void deleteQuizz(Long quizzId) {
+        Quizz quizz = quizzRepository.findById(quizzId)
+            .orElseThrow(() -> new InvalidDataException("Quizz not found with id: " + quizzId));
+        quizzRepository.delete(quizz);
+    }
+
+    @Override
+    public List<QuizzResponse> searchQuizz(String keyword) {
+        List<Quizz> quizzes = quizzRepository.findByNameContainingIgnoreCase(keyword);
+        return convertToQuizzResponses(quizzes);
     }
 }

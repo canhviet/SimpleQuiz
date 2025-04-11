@@ -20,7 +20,7 @@ import lombok.Setter;
 @Builder
 public class Options extends AbstractEntity<Long>{
     
-    @Column(name = "title")
+    @Column(name = "title", columnDefinition = "TEXT")
     private String title;
 
     @ManyToOne

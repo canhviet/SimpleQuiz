@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SignInRequest } from '../../../../types';
+import { JwtPayload, SignInRequest, TokenResponse } from '../../../../types';
 import { AuthService } from '../../_services/auth.service';
-import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import { jwtDecode } from 'jwt-decode';
 
@@ -16,9 +15,8 @@ export class LoginComponent {
     constructor(
         private router: Router,
         private authService: AuthService,
-        private cookieService: CookieService,
         private toastr: ToastrService
-    ) {}
+    ) { }
 
     signInRequest: SignInRequest = {
         username: '',
@@ -28,37 +26,40 @@ export class LoginComponent {
     remember: boolean = false;
 
     ngOnInit() {
-        const token = this.cookieService.get('authToken');
+        const token = this.authService.getTokenData();
 
         if (token) {
-            this.router.navigate(['home']);
-            const decoded = jwtDecode(token);
-            console.log('Thông tin token:', decoded);
+            const decoded = jwtDecode<JwtPayload>(token.accessToken);
+
+            const currentTime = Math.floor(Date.now() / 1000);
+
+            if (decoded.exp < currentTime) {
+                this.authService.removeToken();
+                this.router.navigate(['']);
+            } else {
+                this.router.navigate(['home']);
+            }
         }
+
     }
 
-    onSubmit() {
-        if (true) {
+    onSubmit(form: any) {
+        if (form.valid) {
             this.authService
                 .login(this.signInRequest.username, this.signInRequest.password)
                 .subscribe({
-                    next: (data) => {
-                        if (this.remember == true) {
-                            this.cookieService.set(
-                                'authToken',
-                                data.accessToken
-                            );
-                        } else {
-                            window.sessionStorage.setItem(
-                                'accessToken',
-                                data.accessToken
-                            );
-                        }
+                    next: (data: TokenResponse) => {
+                        this.authService.removeToken();
+                        this.authService.setTokenData(data);
 
                         this.toastr.success(
                             'Đăng nhập thành công!',
                             'Thành công'
                         );
+
+                        sessionStorage.setItem('userId', data.userId);
+
+                        this.router.navigate(['home']);
                     },
                     error: (error) => {
                         this.toastr.error('Đăng nhập không thành công!', error);

@@ -1,0 +1,75 @@
+.container {
+  margin: auto;
+  padding: 20px;
+  background: #f4faff;;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+.question-box {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.option-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  max-width: 900px;
+}
+
+.option-input {
+  flex-grow: 1;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.content-editor {
+  width: 100%;
+}
+
+.content-editor-question {
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.form-check-input {
+  margin-left: 50px;
+  margin-right: 20px;
+  padding: 10px;
+}
+
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: red;
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.delete-btn:hover {
+  color: darkred;
+}

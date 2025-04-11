@@ -1,0 +1,12 @@
+.center-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.content {
+    background: #f4faff;
+    padding: 20px;
+    border-radius: 8px;
+}

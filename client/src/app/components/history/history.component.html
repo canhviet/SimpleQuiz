@@ -1,0 +1,17 @@
+<div
+    *ngFor="let h of list; let i = index"
+    class="d-flex flex-wrap justify-content-center gap-3"
+>
+    <div class="card w-100 mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Quiz name: {{ h.quizzName }}</h5>
+            <p class="card-text">
+                Date: {{ h.createAt | date : "dd/MM/yyyy HH:mm:ss" }}
+            </p>
+            <p>Score: {{ h.score }}</p>
+            <!--
+                need detail
+            > -->
+        </div>
+    </div>
+</div>

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
+import { CookieService } from 'ngx-cookie-service';
+import { TokenResponse } from '../../../types';
 
 const AUTH_API = 'http://localhost:8081/auth/';
 
@@ -13,7 +15,14 @@ const httpOptions = {
     providedIn: 'root',
 })
 export class AuthService {
-    constructor(private apiService: ApiService) {}
+    private tokenData: TokenResponse | null = null;
+
+    constructor(private apiService: ApiService, private cookieService: CookieService) {
+        const tokenString = this.cookieService.get('token');
+        if (tokenString) {
+            this.tokenData = JSON.parse(tokenString);
+        }
+    }
 
     login(username: String, password: String): Observable<any> {
         return this.apiService.post(
@@ -66,6 +75,19 @@ export class AuthService {
         return this.apiService.post(AUTH_API + 'change-password', data, {
             responseType: 'text' as 'json',
         });
+    }
+
+    setTokenData(data: TokenResponse) {
+        this.tokenData = data;
+        this.cookieService.set('token', JSON.stringify(data), 7);
+    }
+
+    getTokenData(): TokenResponse | null {
+        return this.tokenData;
+    }
+
+    removeToken() {
+        this.cookieService.delete('token');
     }
 }
 

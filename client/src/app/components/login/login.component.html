@@ -9,7 +9,7 @@
                 />
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form (ngSubmit)="onSubmit()">
+                <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
                     <div
                         class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start"
                     >
@@ -36,20 +36,16 @@
                             name="username"
                             #username="ngModel"
                             required
-                            email
                         />
-                        <label class="form-label" for="form3Example3"></label>
-                        <!-- <div
+                        <label class="form-label"></label>
+                        <div
                             *ngIf="username.touched && username.invalid"
                             class="text-danger"
                         >
                             <div *ngIf="username.errors?.['required']">
-                                Email là bắt buộc.
+                                username not null
                             </div>
-                            <div *ngIf="username.errors?.['email']">
-                                Email không hợp lệ.
-                            </div>
-                        </div> -->
+                        </div>
                     </div>
 
                     <!-- Password input -->
@@ -62,52 +58,30 @@
                             name="password"
                             #password="ngModel"
                             required
-                            minlength="6"
                         />
-                        <!-- <div
+                        <div
                             *ngIf="password.touched && password.invalid"
                             class="text-danger"
                         >
                             <div *ngIf="password.errors?.['required']">
-                                Mật khẩu là bắt buộc.
+                                password not null
                             </div>
-                            <div *ngIf="password.errors?.['minlength']">
-                                Mật khẩu phải có ít nhất 6 ký tự.
-                            </div>
-                        </div> -->
+                        </div>
                     </div>
 
                     <div
                         class="d-flex justify-content-between align-items-center"
                     >
-                        <div class="form-check mb-0">
-                            <input
-                                class="form-check-input me-2"
-                                type="checkbox"
-                                id="form2Example3"
-                                [(ngModel)] = "remember"
-                                name="remember"
-                            />
-                            <label class="form-check-label" for="form2Example3"
-                                >Remember me</label
-                            >
-                        </div>
                         <a href="#!" class="text-body">Forgot password?</a>
                     </div>
 
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <!-- <button
+                        <button
                             type="submit"
                             class="btn btn-primary btn-lg"
+                            style="padding-left: 2.5rem; padding-right: 2.5rem"
+                            (click)="onSubmit(loginForm)"
                             [disabled]="loginForm.invalid"
-                            style="padding-left: 2.5rem; padding-right: 2.5rem"
-                            (click)="onSubmit()"
-                        >
-                            Login
-                        </button> -->
-                        <button
-                            style="padding-left: 2.5rem; padding-right: 2.5rem"
-                            (click)="onSubmit()"
                         >
                             Login
                         </button>

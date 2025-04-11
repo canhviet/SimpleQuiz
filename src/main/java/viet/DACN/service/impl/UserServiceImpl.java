@@ -18,6 +18,7 @@ import viet.DACN.dto.request.UserRequest;
 import viet.DACN.dto.response.PageResponse;
 import viet.DACN.dto.response.ResponseData;
 import viet.DACN.dto.response.UserResponse;
+import viet.DACN.exception.InvalidDataException;
 import viet.DACN.model.Role;
 import viet.DACN.model.User;
 import viet.DACN.repo.RoleRepository;
@@ -73,7 +74,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(null);
+        return userRepository.findByUsername(username).orElseThrow(() -> new InvalidDataException("username not found"));
     }
 
     @Override
@@ -87,7 +88,7 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = new HashSet<>();
         String defaultRoleName = "ROLE_USER"; 
         Role role = roleRepository.findByName(defaultRoleName)
-                .orElseThrow(() -> new RuntimeException("Vai trò " + defaultRoleName + " không tồn tại"));
+                .orElseThrow(() -> new InvalidDataException("Vai trò " + defaultRoleName + " không tồn tại"));
         roles.add(role);
         
         user.setRoles(roles);

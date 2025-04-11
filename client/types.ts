@@ -40,7 +40,13 @@ export interface PaginationParams {
 export interface Option {
   id?: number;
   title: string;
-  is_correct: boolean;
+  isCorrect: boolean;
+}
+
+export interface TokenResponse {
+    userId: string;
+    accessToken: string;
+    refreshToken: string;
 }
 
 export interface Question {
@@ -52,11 +58,45 @@ export interface Question {
 export interface Quizz {
   id?: number;
   userId: number;
-  title: string;
+  name: String;
   questions: Question[];
+}
+
+export interface QuizResponse {
+  id?: number;
+  userId: number;
+  name: String;
+  questions: Question[];
+  updatedAt: Date;
 }
 
 export interface SignInRequest {
     username: String;
     password: String;
+}
+
+export interface DataResponse {
+    status: number;
+    message: string;
+    data: any;
+}
+
+export interface JwtPayload {
+  roles: string[];
+  username: string;
+  sub: string;
+  iat: number;
+  exp: number;
+}
+
+export interface HistoryResponse {
+  quizzId: number;
+  score: String;
+  createAt: Date;
+}
+
+export interface HistoryRequest {
+  score: String;
+  userId: number;
+  quizzId: number;
 }

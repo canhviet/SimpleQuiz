@@ -1,7 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/dist/css/bootstrap.min.css";
-@import 'quill/dist/quill.core.css';
-@import 'quill/dist/quill.bubble.css';
-@import 'quill/dist/quill.snow.css';
-@import 'ngx-toastr/toastr';
-@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import "quill/dist/quill.core.css";
+@import "quill/dist/quill.bubble.css";
+@import "quill/dist/quill.snow.css";
+@import "ngx-toastr/toastr";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+quill-editor .ql-toolbar {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+quill-editor .ql-container {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+quill-editor .ql-editor {
+    background-color: #fff;
+    border-radius: 0 0 8px 8px;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+}
