@@ -20,6 +20,8 @@ import { YourQuizzComponent } from './components/your-quizz/your-quizz.component
 import { HistoryComponent } from './components/history/history.component';
 import { QuizDetailComponent } from './components/quiz-detail/quiz-detail.component';
 import { QuizComponent } from './components/quiz/quiz.component';
+import { PracticeComponent } from './components/practice/practice.component';
+import { AddWithAIComponent } from './components/add-with-ai/add-with-ai.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +36,9 @@ import { QuizComponent } from './components/quiz/quiz.component';
         YourQuizzComponent,
         HistoryComponent,
         QuizDetailComponent,
-        QuizComponent
+        QuizComponent,
+        PracticeComponent,
+        AddWithAIComponent
     ],
     imports: [
         BrowserModule,

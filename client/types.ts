@@ -100,3 +100,10 @@ export interface HistoryRequest {
   userId: number;
   quizzId: number;
 }
+
+export interface GenAI {
+    topic: String;
+    numQuestions: number;
+    userId: number;
+    quizzName: String;
+}

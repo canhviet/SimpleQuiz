@@ -11,7 +11,13 @@ export class SidebarComponent {
 
     isDropdownOpen = false;
 
+    isDropDownAIOpen = false;
+
     toggleDropdown() {
         this.isDropdownOpen = !this.isDropdownOpen;
+    }
+
+    toggleDropdownAI() {
+        this.isDropDownAIOpen = !this.isDropDownAIOpen;
     }
 }

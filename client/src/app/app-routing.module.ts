@@ -10,6 +10,8 @@ import { YourQuizzComponent } from './components/your-quizz/your-quizz.component
 import { HistoryComponent } from './components/history/history.component';
 import { QuizComponent } from './components/quiz/quiz.component';
 import { QuizDetailComponent } from './components/quiz-detail/quiz-detail.component';
+import { AddWithAIComponent } from './components/add-with-ai/add-with-ai.component';
+import { PracticeComponent } from './components/practice/practice.component';
 
 const routes: Routes = [
     {
@@ -48,6 +50,14 @@ const routes: Routes = [
             {
                 path: 'quiz-detail/:quizId',
                 component: QuizDetailComponent
+            },
+            {
+                path: 'add-with-ai',
+                component: AddWithAIComponent
+            },
+            {
+                path: 'practice',
+                component: PracticeComponent
             }
         ],
     },

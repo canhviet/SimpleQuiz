@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import viet.DACN.dto.request.GenerateAI;
 import viet.DACN.dto.request.QuizzRequest;
 import viet.DACN.dto.response.QuizzResponse;
 import viet.DACN.dto.response.ResponseData;
@@ -91,6 +92,18 @@ public class QuizzController {
                 "Search results", list);
         } catch (Exception e) {
             return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        }
+    }
+
+    @PostMapping("/generate-ai")
+    public ResponseData<?> generateQuizWithAI(@RequestBody GenerateAI request) {
+        try {
+            Long quizzId = quizzService.generateQuizWithAI(request);
+            return new ResponseData<>(HttpStatus.CREATED.value(), 
+                "AI-generated quizz created successfully", quizzId);
+        } catch (Exception e) {
+            return new ResponseData<>(HttpStatus.BAD_REQUEST.value(), 
+                "Failed to generate AI quizz: " + e.getMessage());
         }
     }
 }

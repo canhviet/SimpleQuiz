@@ -12,7 +12,6 @@ import { Observable, throwError } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../_services/auth.service';
-import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
